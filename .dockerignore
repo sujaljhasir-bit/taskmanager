@@ -1,0 +1,9 @@
+target/
+data/
+.git/
+.env
+*.log
+*.zip
+.idea/
+.vscode/
+node_modules/

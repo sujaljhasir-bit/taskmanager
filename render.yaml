@@ -1,0 +1,33 @@
+# Render Blueprint. Render > New > Blueprint > pick your GitHub repo.
+databases:
+  - name: metropolitan-db
+    plan: free              # free Postgres expires 30 days after creation (see README); use a paid plan to keep data
+    databaseName: metropolitan
+    user: metropolitan
+
+services:
+  - type: web
+    name: metropolitan
+    runtime: docker
+    plan: free              # free web services spin down after 15 min idle (about 1 minute to wake)
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: postgres
+      - key: JWT_SECRET
+        generateValue: true  # Render generates a random production secret; it is never in Git
+      - key: DB_HOST
+        fromDatabase: { name: metropolitan-db, property: host }
+      - key: DB_PORT
+        fromDatabase: { name: metropolitan-db, property: port }
+      - key: DB_NAME
+        fromDatabase: { name: metropolitan-db, property: database }
+      - key: DB_USER
+        fromDatabase: { name: metropolitan-db, property: user }
+      - key: DB_PASSWORD
+        fromDatabase: { name: metropolitan-db, property: password }
+      - key: ADMIN_EMAIL     # optional: asked for in the dashboard; leave blank for no admin
+        sync: false
+      - key: ADMIN_PASSWORD  # optional (8-72 characters)
+        sync: false

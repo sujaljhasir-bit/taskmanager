@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metropolitan · Team Tasks</title>
+<meta name="description" content="Metropolitan: a real-time collaborative task manager.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2324252b'/%3E%3Cpath d='M7 22V12l5-3v13m3 0V8l5 3v11m3 0v-8l2 1v7' stroke='%23a69ac5' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="skyline" viewBox="0 0 800 180" preserveAspectRatio="xMidYMax slice">
+      <g fill="currentColor">
+        <rect x="0" y="120" width="60" height="60"/><rect x="60" y="80" width="46" height="100"/>
+        <rect x="106" y="108" width="40" height="72"/><rect x="146" y="50" width="52" height="130"/>
+        <path d="M172 50l0-24 2 0 0 24z"/><rect x="198" y="90" width="48" height="90"/>
+        <rect x="246" y="130" width="40" height="50"/><rect x="286" y="66" width="56" height="114"/>
+        <rect x="342" y="100" width="36" height="80"/><rect x="378" y="30" width="44" height="150"/>
+        <path d="M400 30l0-22 2 0 0 22z"/><rect x="422" y="84" width="50" height="96"/>
+        <rect x="472" y="120" width="42" height="60"/><rect x="514" y="58" width="54" height="122"/>
+        <rect x="568" y="98" width="40" height="82"/><rect x="608" y="40" width="46" height="140"/>
+        <rect x="654" y="110" width="44" height="70"/><rect x="698" y="76" width="52" height="104"/>
+        <rect x="750" y="124" width="50" height="56"/>
+      </g>
+      <g fill="#fff" opacity=".18">
+        <rect x="156" y="64" width="6" height="8"/><rect x="172" y="64" width="6" height="8"/><rect x="156" y="84" width="6" height="8"/>
+        <rect x="388" y="46" width="6" height="8"/><rect x="404" y="46" width="6" height="8"/><rect x="388" y="70" width="6" height="8"/>
+        <rect x="524" y="74" width="6" height="8"/><rect x="540" y="74" width="6" height="8"/><rect x="618" y="58" width="6" height="8"/>
+        <rect x="296" y="82" width="6" height="8"/><rect x="316" y="82" width="6" height="8"/><rect x="70" y="96" width="6" height="8"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ Authentication ============ -->
+<main id="auth" class="auth">
+  <section class="auth-art" aria-hidden="true">
+    <div class="brand"><span class="brand-mark">M</span><span>Metropolitan</span></div>
+    <div class="art-copy">
+      <p class="eyebrow">Team tasks, in sync</p>
+      <h2>Every line leads somewhere.</h2>
+      <p>Plan, assign and finish work together. Changes reach your teammates the moment they happen.</p>
+    </div>
+    <div class="transit"><i></i><i></i><i></i><i></i><i></i></div>
+    <svg class="skyline" role="presentation"><use href="#skyline"/></svg>
+  </section>
+  <section class="auth-panel">
+    <div class="auth-card">
+      <div class="brand brand-mobile"><span class="brand-mark">M</span><span>Metropolitan</span></div>
+      <h1 id="auth-title">Welcome back.</h1>
+      <p id="auth-subtitle" class="subtle">Sign in and pick up where you left off.</p>
+      <form id="auth-form" novalidate>
+        <div id="name-field" class="field" hidden>
+          <label for="auth-name">Full name</label>
+          <input id="auth-name" type="text" autocomplete="name" maxlength="80" placeholder="Sujal Jha">
+        </div>
+        <div class="field">
+          <label for="auth-email">Email</label>
+          <input id="auth-email" type="email" autocomplete="email" required placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="auth-password">Password</label>
+          <input id="auth-password" type="password" autocomplete="current-password" required minlength="1" maxlength="72">
+          <small id="password-hint" class="hint" hidden>Use 8 to 72 characters.</small>
+        </div>
+        <p id="auth-error" class="form-error" role="alert"></p>
+        <button id="auth-submit" class="primary" type="submit">Sign in <span>↗</span></button>
+      </form>
+      <p class="switch"><span id="auth-switch-label">New around here?</span> <button id="auth-toggle" class="text-button" type="button">Create an account</button></p>
+    </div>
+  </section>
+</main>
+
+<!-- ============ Workspace ============ -->
+<div id="workspace" class="shell" hidden>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">M</span><span>Metropolitan</span></div>
+    <nav class="nav" aria-label="Main">
+      <button class="nav-item active" data-view="board" type="button"><span class="stop"></span><span data-icon="grid"></span><span class="nav-label">Overview</span><b id="nav-total" class="badge">0</b></button>
+      <button class="nav-item" data-view="mine" type="button"><span class="stop"></span><span data-icon="check"></span><span class="nav-label">Assigned to me</span></button>
+      <button class="nav-item" data-view="upcoming" type="button"><span class="stop"></span><span data-icon="calendar"></span><span class="nav-label">Upcoming</span></button>
+      <button class="nav-item" data-view="team" type="button"><span class="stop"></span><span data-icon="users"></span><span class="nav-label">People</span></button>
+    </nav>
+    <div class="sidebar-foot">
+      <div id="connection" class="connection" role="status" aria-live="polite"><i></i><span>Connecting</span></div>
+      <div class="me">
+        <span id="user-avatar" class="avatar">–</span>
+        <div><strong id="user-name"></strong><small id="user-role"></small></div>
+      </div>
+      <button id="logout" class="ghost" type="button"><span data-icon="logout"></span> Sign out</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div class="crumbs"><span>Workspace</span> / <strong id="breadcrumb-view">Overview</strong></div>
+      <div class="topbar-right"><time id="today" class="today"></time><button id="new-task" class="primary small" type="button"><span data-icon="plus"></span> New task</button></div>
+    </header>
+
+    <section class="page-head">
+      <h1 id="page-title">A good day to make progress.</h1>
+      <p id="page-description" class="subtle"></p>
+    </section>
+
+    <section id="overview-banner" class="banner">
+      <div>
+        <h2>Your team, one board.</h2>
+        <p>Tasks you own or are assigned to appear here and update live for everyone involved.</p>
+        <button id="people-link" class="ghost light" type="button"><span data-icon="users"></span> Meet your teammates</button>
+      </div>
+      <svg class="skyline" role="presentation" aria-hidden="true"><use href="#skyline"/></svg>
+    </section>
+
+    <section id="stats" class="stats" aria-label="Task statistics"></section>
+
+    <section id="task-section">
+      <div class="section-head">
+        <div><h2 id="board-heading">Your task board</h2><span id="task-count" class="subtle">0 tasks</span></div>
+        <div class="view-toggle" role="group" aria-label="Layout">
+          <button id="board-mode" class="selected" type="button" aria-pressed="true">Board</button>
+          <button id="list-mode" type="button" aria-pressed="false">List</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <label class="search"><span data-icon="search"></span><span class="sr">Search tasks</span><input id="search" type="search" placeholder="Search tasks" autocomplete="off"></label>
+        <label class="select"><span class="sr">Priority</span>
+          <select id="priority-filter"><option value="">All priorities</option><option value="HIGH">High</option><option value="MEDIUM">Medium</option><option value="LOW">Low</option></select></label>
+        <label class="select"><span class="sr">Status</span>
+          <select id="status-filter"><option value="">All statuses</option><option value="TODO">To do</option><option value="IN_PROGRESS">In progress</option><option value="DONE">Done</option></select></label>
+        <button id="clear-filters" class="text-button" type="button" hidden>Clear filters</button>
+      </div>
+      <p id="board-error" class="form-error" role="alert"></p>
+      <div id="task-board" class="board"><div class="loading">Opening your workspace…</div></div>
+      <div id="first-steps" class="first-steps" hidden>
+        <h3>Start your first line.</h3>
+        <p>Create a task, or add a few sample tasks to explore. They are real records you can edit or delete.</p>
+        <div class="row"><button id="first-task" class="primary small" type="button">Create a task</button><button id="sample-tasks" class="ghost" type="button">Add sample tasks</button></div>
+      </div>
+    </section>
+
+    <section id="people-section" hidden>
+      <div class="section-head"><div><h2>Teammates</h2><span class="subtle">Everyone with an account. Assign tasks to any of them.</span></div>
+        <button id="refresh-people" class="ghost" type="button">Refresh</button></div>
+      <div id="people-grid" class="people"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ============ Dialogs ============ -->
+<dialog id="task-dialog" aria-labelledby="dialog-title">
+  <form id="task-form" novalidate>
+    <header class="dialog-head"><h2 id="dialog-title">Create a task</h2><button id="close-dialog" class="icon-button" type="button" aria-label="Close dialog">✕</button></header>
+    <div class="field"><label for="task-title">Title</label><input id="task-title" required maxlength="120" placeholder="What needs to happen?"></div>
+    <div class="field"><label for="task-description">Description</label><textarea id="task-description" rows="4" maxlength="2000" placeholder="Add some context"></textarea></div>
+    <div class="grid2">
+      <div class="field"><label for="task-status">Status</label><select id="task-status"><option value="TODO">To do</option><option value="IN_PROGRESS">In progress</option><option value="DONE">Done</option></select></div>
+      <div class="field"><label for="task-priority">Priority</label><select id="task-priority"><option value="LOW">Low</option><option value="MEDIUM" selected>Medium</option><option value="HIGH">High</option></select></div>
+      <div class="field"><label for="task-assignee">Assignee</label><select id="task-assignee"><option value="">Unassigned</option></select></div>
+      <div class="field"><label for="task-due">Due date</label><input id="task-due" type="date"></div>
+    </div>
+    <p id="task-owner-note" class="subtle"></p>
+    <p id="task-error" class="form-error" role="alert"></p>
+    <footer class="dialog-foot"><button id="delete-task" class="danger" type="button" hidden>Delete</button><span class="spacer"></span><button id="cancel-dialog" class="ghost" type="button">Cancel</button><button id="save-task" class="primary" type="submit">Create task ↗</button></footer>
+  </form>
+</dialog>
+
+<dialog id="confirm-dialog" aria-labelledby="confirm-title">
+  <h2 id="confirm-title">Delete this task?</h2>
+  <p id="confirm-text" class="subtle"></p>
+  <p id="confirm-error" class="form-error" role="alert"></p>
+  <div class="dialog-foot"><span class="spacer"></span><button id="cancel-delete" class="ghost" type="button">Keep it</button><button id="confirm-delete" class="danger solid" type="button">Delete task</button></div>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script src="/app.js"></script>
+</body>
+</html>

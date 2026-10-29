@@ -1,0 +1,11 @@
+target/
+data/
+.env
+*.log
+*.zip
+*.mv.db
+*.trace.db
+.idea/
+.vscode/
+*.iml
+.DS_Store

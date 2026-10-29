@@ -1,0 +1,45 @@
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+  shutdown: graceful
+  compression:
+    enabled: true
+    mime-types: text/html,text/css,application/javascript,application/json
+
+spring:
+  application:
+    name: metropolitan
+  datasource:
+    # Local default: persistent file-based H2 in ./data (PostgreSQL compatibility mode).
+    url: jdbc:h2:file:./data/metropolitan;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: ""
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+
+app:
+  jwt:
+    # Leave empty locally (a random key is generated per start). REQUIRED in the "postgres" profile.
+    secret: ${JWT_SECRET:}
+    expiration-minutes: 720
+  admin:
+    # Optional: creates this administrator at startup if it does not exist yet.
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    root: INFO

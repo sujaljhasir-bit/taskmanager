@@ -1,0 +1,9 @@
+# Activated with SPRING_PROFILES_ACTIVE=postgres (Render and docker compose).
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT:5432}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 20000
