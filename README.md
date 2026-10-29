@@ -88,3 +88,10 @@ curl -s -X PUT localhost:8080/api/tasks/1 -H "Authorization: Bearer $TOKEN" -H '
 - No rate limiting or email verification (out of scope); add a proxy/limiter before real use.
 - WebSocket tickets are held in memory, so run a single instance (as on Render free).
 - Architecture notes: `docs/ARCHITECTURE.md`.
+
+## Live Demo
+
+https://taskmanager-3o8a.onrender.com
+
+_Hosted on Render's free tier, so the first load may take about a minute to wake up._
+
